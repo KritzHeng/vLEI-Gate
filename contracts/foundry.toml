@@ -1,0 +1,31 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+# Aligned with flap-sh/FlapPoolLaunchVaultExample (solc 0.8.26, cancun). via_ir is kept for this project.
+solc_version = "0.8.26"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+# The Flap example ships nested OZ 4.9 remappings; only the explicit list below is used.
+auto_detect_remappings = false
+remappings = [
+  "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+  "forge-std/=lib/forge-std/src/",
+  "solady/=lib/solady/src/",
+  # Flap sources import each other as "src/flap/...".
+  "src/flap/=lib/FlapPoolLaunchVaultExample/src/flap/",
+  "flap/=lib/FlapPoolLaunchVaultExample/src/",
+]
+fs_permissions = [{ access = "read-write", path = "./deployments" }]
+
+[rpc_endpoints]
+bsc_testnet = "${BSC_TESTNET_RPC}"
+
+[etherscan]
+# Etherscan API V2 (one etherscan.io key covers BSC / BSC testnet); the old api-testnet.bscscan.com V1 endpoint is retired.
+bsc_testnet = { key = "${BSCSCAN_API_KEY}", url = "https://api.etherscan.io/v2/api?chainid=97", chain = 97 }
+
+[lint]
+lint_on_build = false
