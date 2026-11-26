@@ -6,7 +6,6 @@ BEFORE SUBMITTING — fill every placeholder, then delete this comment:
   [x] Cournot live calls logged (Section 4.4); [ ] screenshot `docs/img/cournot-panel.png`
   [x] Flap enablement: all three launcher factories enabled at 1x on 2026-11-26 via Flap's testnet whitelister (Section 4.2); vault factory still requested
   [x] Flap UI ZIPs: launcher (v2 BNB, Atlas-priced 0x3949…), vault launcher (v2 USDT 0xEA3d…) and vault (0x3C90…, token 0xa272…) packaged in flap-launcher-ui/dist/
-  [ ] Team (bottom of this file)
   [ ] git grep for API keys / private keys before making the repo public
 -->
 
@@ -147,7 +146,7 @@ Honest status:
 - **the evidence**: Cournot's `basis` entries (source, summary, time, link; here the Kalshi market page),
 - billing (`free_quota` / key), latency, timestamp and the log file that proves the call.
 
-The offering page repeats the decision in a short banner that links to the full card. **Text added by vLEI-Gate** (the interest-rate interpretation) is shown with an *"Added by vLEI-Gate"* badge, separate from what Cournot returned. Screenshot: `docs/img/cournot-panel.png` `<add>`
+The offering page repeats the decision in a short banner that links to the full card. **Text added by vLEI-Gate** (the interest-rate interpretation) is shown with an *"Added by vLEI-Gate"* badge, separate from what Cournot returned.
 
 **Proof of successful live calls** (sanitized: client IP redacted, no API key used; Cournot's probability response carries no request id, so the log file is the reference):
 
@@ -518,7 +517,3 @@ cd flap-launcher-ui
 ## License
 
 MIT
-
-## Team
-
-`<names / handles>`
