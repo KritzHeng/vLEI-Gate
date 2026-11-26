@@ -1,0 +1,53 @@
+{
+  "requestedAt": "20261126T071554Z",
+  "endpoint": "POST https://interface.cournot.ai/intelligence/v1/probability",
+  "request": {
+    "message": "Will the 10-year US Treasury yield be above 4.74% on December 31, 2026?",
+    "market_ids": [
+      "2878523"
+    ]
+  },
+  "httpStatus": 200,
+  "latencyMs": 528,
+  "paymentRequiredHeader": false,
+  "response": {
+    "code": 0,
+    "msg": "Success",
+    "data": {
+      "charged": false,
+      "x402": null,
+      "free_quota": {
+        "ip": "<redacted>",
+        "total": 3,
+        "used": 2,
+        "remaining": 1
+      },
+      "probability": 0.74,
+      "markets": [
+        {
+          "market_info": {
+            "id": 2878523,
+            "title": "Will the yield of 10-year U.S. treasury notes be above 4.74 on Dec 31, 2026?",
+            "description": "If the 10Y US Treasury Yield is above 4.74% on Dec 31, 2026, then the market resolves to Yes. The market will expire at the sooner of the first 7:00 PM ET following the data release for Dec 31, 2026, or one week following Dec 31, 2026.",
+            "start_time": "",
+            "end_time": "2026-12-31T19:00:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.74
+          },
+          "matching_confidence": 0.845
+        }
+      ],
+      "basis": [
+        {
+          "source": "kalshi",
+          "summary": "kalshi latest YES price 0.7400 for \"Will the yield of 10-year U.S. treasury notes be above 4.74 on Dec 31, 2026?\", ends 2026-12-31T19:00:00Z",
+          "time": "2026-11-26T07:09:40Z",
+          "url": "https://kalshi.com/markets/kxnote10y/kxnote10y-26dec31?op_market_ticker=KXNOTE10Y-26DEC31-T4.74"
+        }
+      ],
+      "api_key_quota": null,
+      "billing": "free_quota"
+    }
+  },
+  "sanitized": "client IP redacted; API key never logged"
+}

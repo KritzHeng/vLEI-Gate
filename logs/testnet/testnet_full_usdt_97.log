@@ -1,0 +1,189 @@
+RPC https://bsc-testnet-rpc.publicnode.com
+state /Applications/finema/enauthn/alone/bnb/logs/testnet/testnet_full_usdt_97.json
+vaultLauncherFactory 0xEA3d889e5EA5f684268cDEcc45CE77322F0D9CeD
+registry 0x721013977E002A21274CC304c1b980c80A8689EF
+USDT 0x190C989D5665a0e404B444b53CAE9AbCfb600157
+portal 0x000042108465206185A077Edc3F3fd2b49060000
+wallets: deployer 0x219795b90ea283ca8a2511b0752d8a2d2AE7A9Ef, verifier 0xB51CfC1705ff83FBf21fDfD7bfE0588281FbD4C5, alice 0xdF607926654E21e188c8c8CFB120CBD49c282246, bob 0xa8A215c7c71830F8aC068Bae60CD408463C6e181, erin 0x99Db2c98C52139bDf24ae78C6AB81437E2eEd44C, outsider 0x32bE4D85B1bDF59B6E5639E9350693ff5232A229
+
+== 0. gas balances (top up from the deployer only when below the minimum)
+     alice 0.014926 tBNB: ok
+     bob 0.119958 tBNB: ok
+     erin 0.009969 tBNB: ok
+     tx 0xc21b44a3fae7129c46f0bb2e6d509a7f0c69dae0e0bed2223a05d575ed5a78ba  (fund outsider 0.003007 tBNB)
+     success  gasUsed 21000  fee 0.000002 BNB
+
+== 1. mint mock USDT (deployer calls mint(address,uint256))
+     tx 0xeb0cbec3971625801e8d88d108abe5459e257b9e9cef35a0d402cc4c799fba2d  (mint 1500 USDT to alice)
+     success  gasUsed 51202  fee 0.000005 BNB
+     alice USDT 1,500.000000
+     tx 0xece125c79efb60fe09858f3a69aa08a0bcd251c1c0c0f3e9ba1107b5c75dae56  (mint 2000 USDT to bob)
+     success  gasUsed 51202  fee 0.000005 BNB
+     bob USDT 2,000.000000
+     tx 0x50db747cc2073355273fb0f77fe0918f7c8eef5b6268e22d1c4a8cbfccaa3edd  (mint 1000 USDT to erin)
+     success  gasUsed 51202  fee 0.000005 BNB
+     erin USDT 1,000.000000
+     tx 0x417691fa97ed5b49a790acde41057ef4b207d2a8465b25c089bdf7991c7bb0d0  (mint 500 USDT to outsider)
+     success  gasUsed 51202  fee 0.000005 BNB
+     outsider USDT 500.000000
+
+== 2. verify + register alice (launch), bob (invest), erin (invest)
+     backend on :63287 (data copy /var/folders/t3/wx0ztnnn7sq_t7d_nnh90tjh0000gp/T/vlei-testnet-irzkh8_8/data), chain 97, verifier 0xB51CfC1705ff83FBf21fDfD7bfE0588281FbD4C5
+     bob: verifier ok, role 1 (ECR)
+     tx 0x99c35ba2d5d75fe16581d573a6d97947644a3759b2c316b902e8508f8ee1dc63  (bob register (invest))
+     success  gasUsed 54559  fee 0.000005 BNB
+     backend stopped
+     alice: isActive True, leiHash 0xf44de415f83dd676…, walletRevoked false
+     bob: isActive True, leiHash 0x0729f2ecd85be1cd…, walletRevoked false
+     erin: isActive True, leiHash 0x0729f2ecd85be1cd…, walletRevoked false
+
+== 3. alice Portal.newLauncher(VLEIVaultLauncherFactoryV2, VLEIMintConfig) with a 0x7777 salt
+     salt 0x288a0655652737f448648adb4bd8c29cecf8ceb51a80f9db9ae7b9e5a199decd -> token 0xa27228Eec1d484A32aDD3AfCEb2Ad01cc6b07777 (0.2s)
+     tx 0xd4edfad7e38f4f7381e3696d774ea074397f48d35c73560ac7efdc3cad94f4e5  (alice Portal.newLauncher(vaultLauncherFactory))
+     success  gasUsed 625731  fee 0.000063 BNB
+     -> launcher 0x9fEE3844a9E0D38A10E9cC53Adb6c7FFa4F08f27
+     launcher 0x9fEE3844a9E0D38A10E9cC53Adb6c7FFa4F08f27: isLauncher, quoteToken, vaultFactory, creator, target ok; status 0, deadline 1795707174
+
+== 4. outsider (unverified) approve + contribute() -> real failed tx (NotVerified)
+     tx 0xb8b53786e52ade5163afdee289a6556953ca29a1251c4cc21e1b36dd2f8cff08  (outsider approve 500 USDT to launcher)
+     success  gasUsed 46247  fee 0.000005 BNB
+     simulation reverts as expected: NotVerified()
+     tx 0x07b7f61ebebe2bb3004a285d870539c3fdadf6fd0ac7fe7f7362b6e8127b4e8d  (outsider contribute())
+     reverted (as expected)  gasUsed 71075  fee 0.000007 BNB
+
+== 5. bob 1,500 + erin (entity cap) + alice launches
+     tx 0xaef460855f394fdaf4be6adba0cb7738c753ba99cacc103c0ebd49da6691107a  (bob approve 1500 USDT to launcher)
+     success  gasUsed 46247  fee 0.000005 BNB
+     tx 0xad7caa6885985530f2e0f92549dca3599ffac6641d986d0bd9e59169788f57ed  (bob contribute())
+     success  gasUsed 253346  fee 0.000025 BNB
+     -> pulled 1,500.000000 USDT (previewContribute said 1,500.000000); raised 1,500.000000
+     tx 0x990402971de0ba0b1b1ba48b3b01c6c0654cbf935f5e46005f98c69b795973cf  (erin approve 1000 USDT to launcher)
+     success  gasUsed 46247  fee 0.000005 BNB
+     tx 0xdd11183ca6ade886400aefc4ea5b5e584b12fcdae30c37ab2be1fb3d7518eb34  (erin contribute())
+     success  gasUsed 186926  fee 0.000019 BNB
+     -> pulled 500.000000 USDT (previewContribute said 500.000000); raised 2,000.000000
+     erin remaining allowance 500.000000, remainingCapUsd 0.000000
+     simulation reverts as expected: EntityCapReached
+     tx 0xed9a9dc9fa080e5488b715ba0cf923f29515bb722092c0204e977dd33ac89afc  (erin contribute() again (entity cap))
+     reverted (as expected)  gasUsed 88506  fee 0.000009 BNB
+     -> reverted EntityCapReached(2000e18, 2000e18): Andaman entity (bob + erin) at its 2,000 USDT cap
+     raised 2,000.000000, still needed 1,000.000000
+     tx 0x2739816162e1c3015abea15ceb7458258db09c07e1767036db2d1fb18373630a  (alice approve 1000 USDT to launcher)
+     success  gasUsed 46247  fee 0.000005 BNB
+     tx 0x726e10d11225a21299b8a709c80237afb5a423541ab423610a5a016c4c2d905f  (alice contribute() -> launch)
+     success  gasUsed 4758318  fee 0.000476 BNB
+     -> launched; gasUsed 4758318; FlapTokenGraduated emitted
+     token 0xa27228Eec1d484A32aDD3AfCEb2Ad01cc6b07777
+     vault 0xE45AdBf496Ad04145fC60bB756bf1917dF642433
+     pool  0x041595d7EAb3279d7caF762420Bca33359b75643
+     contributions alice 1,000.000000, bob 1,500.000000, erin 500.000000; launcher USDT left 0.000000; graduated True
+
+== 6. bob, erin, alice claim and stake in the vault
+     tx 0x6b6f84d93876948cbf84a48c6cbd893a8887fb636f52757b7ae991267ff53e4e  (bob launcher.claim())
+     success  gasUsed 212086  fee 0.000021 BNB
+     -> bob token balance 250,000.000000
+     tx 0xed1637eec6c4cc9f3bc3d039ad7b51152285e052dd4605d033a6b80fdcb4cfd0  (bob approve tokens to vault)
+     success  gasUsed 48819  fee 0.000005 BNB
+     tx 0xf88f401b6c20929ab6333576faeab16f93016ba98b7a506efbecf37671dcba5c  (bob vault.stake(250,000.000000))
+     success  gasUsed 249652  fee 0.000025 BNB
+     tx 0x95cd66a73b2d9e0196b42b5be10e2d5bdf0b59564d881dbb4ad9f7c0bd87475d  (erin launcher.claim())
+     success  gasUsed 212086  fee 0.000021 BNB
+     -> erin token balance 83,333.333333
+     tx 0x43f5e1489c5ed63fad438ab00f05efce20b9081c0e6125bfcf763867c617cf93  (erin approve tokens to vault)
+     success  gasUsed 48843  fee 0.000005 BNB
+     tx 0x5d4c22e85eec2b52ddad009dbd8a7add7c0ebc2040441cd978d16aac3d3885e2  (erin vault.stake(83,333.333333))
+     success  gasUsed 195576  fee 0.000020 BNB
+     tx 0x80e3632973d7641ba841a4f1cd9174bc9a1e0c5e570be4347216f55d4ba65a41  (alice launcher.claim())
+     success  gasUsed 212086  fee 0.000021 BNB
+     -> alice token balance 166,666.666667
+     tx 0x41f75e4df4b373caf58b1f60f650d7976ca81fbb5f2866a4a7300b0ed2306cf8  (alice approve tokens to vault)
+     success  gasUsed 48843  fee 0.000005 BNB
+     tx 0xae716c378a4a0fddb5455ad2fc23e27f35e5e2212c531cbd203bf7dc857e447b  (alice vault.stake(83,333.333333))
+     success  gasUsed 209976  fee 0.000021 BNB
+     vault totalStaked 416,666.666667 (HELD_RELEASE_MIN_STAKE 10,000.000000)
+
+== 7. outsider (unverified) trades on the DEX, tax is liquidated, TaxProcessor.dispatch()
+     waiting 536s (launch + 601s, as the fork test's vm.warp)
+     tx 0x21f8bc9208e708e301f54fd64c9534714fa2aa59b760324bdb0c51a5613c9804  (outsider approve USDT to router)
+     success  gasUsed 46175  fee 0.000005 BNB
+     tx 0x6e31b2736dde65674f2a075ca760a5f4fc8b5850239c9aa3706e37900721c0b7  (outsider approve token to router)
+     success  gasUsed 48735  fee 0.000005 BNB
+     tx 0x956261bf34d392497840a823e8e2ebc2f513a6bd61b703ac4acfc61789e5f2d1  (outsider buy: 500.000000 USDT -> token)
+     success  gasUsed 258992  fee 0.000026 BNB
+     -> outsider token balance 69,107.474632
+     tx 0x19c5a642d876f46e8b2a3d100186d57a23be976d7641070b2bb30c90b559825c  (outsider sell #1: 30% tokens)
+     success  gasUsed 461221  fee 0.000046 BNB
+     proceeds 151.934715 USDT; liquidated True; processor token bal 0.000000
+     liquidated after 1 rounds: feeQuoteBalance 0.000000, marketQuoteBalance 0.000000, pendingDividendQuoteTokenBalance 0.000000, lpQuoteBalance 2.467710
+     tx 0x6f840f9f8139e2abb179f05600b6c903739b5028d18310d46707ee0447d4ec4f  (TaxProcessor.dispatch() (by outsider))
+     success  gasUsed 89323  fee 0.000009 BNB
+     -> USDT arrived at the vault 12.338552; recognized by the dispatch wake 0.000000
+
+== 8. revokeWallet(erin); erin vault.claim() -> NotVerified; bob evicts erin
+     tx 0x74b03f9257c7933ed6c0600c77ff4d54f41d9c1b0b8357601c8eef4f7fbcc26a  (admin revokeWallet(erin))
+     success  gasUsed 54413  fee 0.000005 BNB
+     simulation reverts as expected: NotVerified()
+     tx 0x0d908da6853ca5c9c585be310bca0fb4e6852076e016570510d4eacf5dfaefaa  (erin vault.claim())
+     reverted (as expected)  gasUsed 46595  fee 0.000005 BNB
+     tx 0x8dfe526d8c0a502b163657f5e2e38a0c8712e6f384c051e5ab25d004e0a334ef  (bob vault.evict(erin))
+     success  gasUsed 214225  fee 0.000021 BNB
+     -> erin's 83,333.333333 tokens returned (balance +83,333.333333); 2.467710 USDT rewards forfeited to the remaining stakers (pending before 2.467710)
+     vault totalForfeited 2.467710, totalStaked 333,333.333333
+
+== 9. bob vault.claim() (USDT yield); outsider stake -> NotVerified
+     tx 0x0fd77dcdc0b8e29beff85705751f35d595248266e2e866f8dce05bcc4523d843  (bob vault.claim())
+     success  gasUsed 131028  fee 0.000013 BNB
+     -> bob received 9.253914 USDT (pending was 9.253914)
+     alice pending (not claimed) 3.084638 USDT
+     tx 0xf949f2d35cf9dafc4a75ca3bd6a16b622591cdd69be5b638ad4e8cd1f52ebd2f  (outsider approve tokens to vault)
+     success  gasUsed 48843  fee 0.000005 BNB
+     simulation reverts as expected: NotVerified()
+     tx 0x2e9a7a52db125f1318ab2c639ec45d0027d9f6ce8750e146bc65026596339724  (outsider vault.stake(24,187.616121))
+     reverted (as expected)  gasUsed 44769  fee 0.000004 BNB
+
+== 10. outsider transfers 1 token to the deployer (token itself not gated: known limitation)
+     tx 0x869d19622f2f87f2944fb074d21b91b6fef7a424cbd3c79920b20c58af0f1ef4  (outsider token.transfer(deployer, 1))
+     success  gasUsed 143043  fee 0.000014 BNB
+
+---------------- summary
+success   fund outsider 0.003007 tBNB                          https://testnet.bscscan.com/tx/0xc21b44a3fae7129c46f0bb2e6d509a7f0c69dae0e0bed2223a05d575ed5a78ba
+success   mint 1500 USDT to alice                              https://testnet.bscscan.com/tx/0xeb0cbec3971625801e8d88d108abe5459e257b9e9cef35a0d402cc4c799fba2d
+success   mint 2000 USDT to bob                                https://testnet.bscscan.com/tx/0xece125c79efb60fe09858f3a69aa08a0bcd251c1c0c0f3e9ba1107b5c75dae56
+success   mint 1000 USDT to erin                               https://testnet.bscscan.com/tx/0x50db747cc2073355273fb0f77fe0918f7c8eef5b6268e22d1c4a8cbfccaa3edd
+success   mint 500 USDT to outsider                            https://testnet.bscscan.com/tx/0x417691fa97ed5b49a790acde41057ef4b207d2a8465b25c089bdf7991c7bb0d0
+success   bob register (invest)                                https://testnet.bscscan.com/tx/0x99c35ba2d5d75fe16581d573a6d97947644a3759b2c316b902e8508f8ee1dc63
+success   alice Portal.newLauncher(vaultLauncherFactory)       https://testnet.bscscan.com/tx/0xd4edfad7e38f4f7381e3696d774ea074397f48d35c73560ac7efdc3cad94f4e5
+success   outsider approve 500 USDT to launcher                https://testnet.bscscan.com/tx/0xb8b53786e52ade5163afdee289a6556953ca29a1251c4cc21e1b36dd2f8cff08
+reverted  outsider contribute()                                https://testnet.bscscan.com/tx/0x07b7f61ebebe2bb3004a285d870539c3fdadf6fd0ac7fe7f7362b6e8127b4e8d
+success   bob approve 1500 USDT to launcher                    https://testnet.bscscan.com/tx/0xaef460855f394fdaf4be6adba0cb7738c753ba99cacc103c0ebd49da6691107a
+success   bob contribute()                                     https://testnet.bscscan.com/tx/0xad7caa6885985530f2e0f92549dca3599ffac6641d986d0bd9e59169788f57ed
+success   erin approve 1000 USDT to launcher                   https://testnet.bscscan.com/tx/0x990402971de0ba0b1b1ba48b3b01c6c0654cbf935f5e46005f98c69b795973cf
+success   erin contribute()                                    https://testnet.bscscan.com/tx/0xdd11183ca6ade886400aefc4ea5b5e584b12fcdae30c37ab2be1fb3d7518eb34
+reverted  erin contribute() again (entity cap)                 https://testnet.bscscan.com/tx/0xed9a9dc9fa080e5488b715ba0cf923f29515bb722092c0204e977dd33ac89afc
+success   alice approve 1000 USDT to launcher                  https://testnet.bscscan.com/tx/0x2739816162e1c3015abea15ceb7458258db09c07e1767036db2d1fb18373630a
+success   alice contribute() -> launch                         https://testnet.bscscan.com/tx/0x726e10d11225a21299b8a709c80237afb5a423541ab423610a5a016c4c2d905f
+success   bob launcher.claim()                                 https://testnet.bscscan.com/tx/0x6b6f84d93876948cbf84a48c6cbd893a8887fb636f52757b7ae991267ff53e4e
+success   bob approve tokens to vault                          https://testnet.bscscan.com/tx/0xed1637eec6c4cc9f3bc3d039ad7b51152285e052dd4605d033a6b80fdcb4cfd0
+success   bob vault.stake(250,000.000000)                      https://testnet.bscscan.com/tx/0xf88f401b6c20929ab6333576faeab16f93016ba98b7a506efbecf37671dcba5c
+success   erin launcher.claim()                                https://testnet.bscscan.com/tx/0x95cd66a73b2d9e0196b42b5be10e2d5bdf0b59564d881dbb4ad9f7c0bd87475d
+success   erin approve tokens to vault                         https://testnet.bscscan.com/tx/0x43f5e1489c5ed63fad438ab00f05efce20b9081c0e6125bfcf763867c617cf93
+success   erin vault.stake(83,333.333333)                      https://testnet.bscscan.com/tx/0x5d4c22e85eec2b52ddad009dbd8a7add7c0ebc2040441cd978d16aac3d3885e2
+success   alice launcher.claim()                               https://testnet.bscscan.com/tx/0x80e3632973d7641ba841a4f1cd9174bc9a1e0c5e570be4347216f55d4ba65a41
+success   alice approve tokens to vault                        https://testnet.bscscan.com/tx/0x41f75e4df4b373caf58b1f60f650d7976ca81fbb5f2866a4a7300b0ed2306cf8
+success   alice vault.stake(83,333.333333)                     https://testnet.bscscan.com/tx/0xae716c378a4a0fddb5455ad2fc23e27f35e5e2212c531cbd203bf7dc857e447b
+success   outsider approve USDT to router                      https://testnet.bscscan.com/tx/0x21f8bc9208e708e301f54fd64c9534714fa2aa59b760324bdb0c51a5613c9804
+success   outsider approve token to router                     https://testnet.bscscan.com/tx/0x6e31b2736dde65674f2a075ca760a5f4fc8b5850239c9aa3706e37900721c0b7
+success   outsider buy: 500.000000 USDT -> token               https://testnet.bscscan.com/tx/0x956261bf34d392497840a823e8e2ebc2f513a6bd61b703ac4acfc61789e5f2d1
+success   outsider sell #1: 30% tokens                         https://testnet.bscscan.com/tx/0x19c5a642d876f46e8b2a3d100186d57a23be976d7641070b2bb30c90b559825c
+success   TaxProcessor.dispatch() (by outsider)                https://testnet.bscscan.com/tx/0x6f840f9f8139e2abb179f05600b6c903739b5028d18310d46707ee0447d4ec4f
+success   admin revokeWallet(erin)                             https://testnet.bscscan.com/tx/0x74b03f9257c7933ed6c0600c77ff4d54f41d9c1b0b8357601c8eef4f7fbcc26a
+reverted  erin vault.claim()                                   https://testnet.bscscan.com/tx/0x0d908da6853ca5c9c585be310bca0fb4e6852076e016570510d4eacf5dfaefaa
+success   bob vault.evict(erin)                                https://testnet.bscscan.com/tx/0x8dfe526d8c0a502b163657f5e2e38a0c8712e6f384c051e5ab25d004e0a334ef
+success   bob vault.claim()                                    https://testnet.bscscan.com/tx/0x0fd77dcdc0b8e29beff85705751f35d595248266e2e866f8dce05bcc4523d843
+success   outsider approve tokens to vault                     https://testnet.bscscan.com/tx/0xf949f2d35cf9dafc4a75ca3bd6a16b622591cdd69be5b638ad4e8cd1f52ebd2f
+reverted  outsider vault.stake(24,187.616121)                  https://testnet.bscscan.com/tx/0x2e9a7a52db125f1318ab2c639ec45d0027d9f6ce8750e146bc65026596339724
+success   outsider token.transfer(deployer, 1)                 https://testnet.bscscan.com/tx/0x869d19622f2f87f2944fb074d21b91b6fef7a424cbd3c79920b20c58af0f1ef4
+token 0xa27228Eec1d484A32aDD3AfCEb2Ad01cc6b07777  vault 0xE45AdBf496Ad04145fC60bB756bf1917dF642433  launcher 0x9fEE3844a9E0D38A10E9cC53Adb6c7FFa4F08f27
+balances: deployer 0.321565, alice 0.009336, bob 0.119837, erin 0.009887, outsider 0.004874
+gas 0.000947 + salt-lock fee 0.005000 = 0.005947 tBNB over 37 txs
+exit 0

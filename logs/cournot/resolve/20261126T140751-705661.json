@@ -1,0 +1,25 @@
+{
+  "question": "Will a US recession be declared in 2026?",
+  "http": 200,
+  "body": {
+    "code": 0,
+    "msg": "Success",
+    "data": {
+      "markets": [
+        {
+          "market_info": {
+            "id": 26419728,
+            "title": "Will there be a recession in 2026? (Yes: Starts)",
+            "description": "If there are two consecutive quarters of negative GDP growth in 2025 or 2026, according to the Bureau of Economic Analysis, then the market resolves to Yes. The market will close at the sooner of the occurrence of the event or 8:25 AM ET on the morning of the expected release of the Advance Estimate of 2026 Q4 GDP. The market will expire at the sooner of the occurrence of the event or the first 10:00 AM ET after the release of the Advance Estimate of 2026 Q4 GDP.",
+            "start_time": "",
+            "end_time": "2027-01-31T13:25:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.0369
+          },
+          "matching_confidence": 0.784
+        }
+      ],
+      "charged": false
+    }
+  }
+}

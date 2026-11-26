@@ -1,0 +1,193 @@
+{
+  "txs": [
+    {
+      "label": "fund alice 0.020000 tBNB",
+      "from": "deployer",
+      "hash": "0x6a3d629a6b9052e44f4e9b40a8588a2b9c43b3788f0ee459740d38f8e5230666",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 21000,
+      "feeWei": 2100000000000,
+      "valueWei": 20000000000000000,
+      "block": 144781249,
+      "url": "https://testnet.bscscan.com/tx/0x6a3d629a6b9052e44f4e9b40a8588a2b9c43b3788f0ee459740d38f8e5230666"
+    },
+    {
+      "label": "fund bob 0.120000 tBNB",
+      "from": "deployer",
+      "hash": "0xaac1a28c65f3e2330913960e95c4cd6d3b560ab2860f2634af0e077f92dbb572",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 21000,
+      "feeWei": 2100000000000,
+      "valueWei": 120000000000000000,
+      "block": 144781257,
+      "url": "https://testnet.bscscan.com/tx/0xaac1a28c65f3e2330913960e95c4cd6d3b560ab2860f2634af0e077f92dbb572"
+    },
+    {
+      "label": "fund erin 0.030000 tBNB",
+      "from": "deployer",
+      "hash": "0xd912ca3e6a680456fc459dafab648b3c4a6248b8bc78770c2d80a52d7417e12e",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 21000,
+      "feeWei": 2100000000000,
+      "valueWei": 30000000000000000,
+      "block": 144781266,
+      "url": "https://testnet.bscscan.com/tx/0xd912ca3e6a680456fc459dafab648b3c4a6248b8bc78770c2d80a52d7417e12e"
+    },
+    {
+      "label": "fund outsider 0.002000 tBNB",
+      "from": "deployer",
+      "hash": "0x866694838cf402782c8b167ecd038a8bcab9a9fb10cd7d524a1ef8a2258b6bb4",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 21000,
+      "feeWei": 2100000000000,
+      "valueWei": 2000000000000000,
+      "block": 144781275,
+      "url": "https://testnet.bscscan.com/tx/0x866694838cf402782c8b167ecd038a8bcab9a9fb10cd7d524a1ef8a2258b6bb4"
+    },
+    {
+      "label": "feed.setAnswer($700)",
+      "from": "deployer",
+      "hash": "0xe615de72471df5cf63709103059616364a0346f53f0ebd03b342244898d892a9",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 36658,
+      "feeWei": 3665800000000,
+      "valueWei": 0,
+      "block": 144781286,
+      "url": "https://testnet.bscscan.com/tx/0xe615de72471df5cf63709103059616364a0346f53f0ebd03b342244898d892a9"
+    },
+    {
+      "label": "alice register (launch)",
+      "from": "alice",
+      "hash": "0x27d995576b220123270d9acdfd1eb093c21e25a2648aa669809cb36d25e2178f",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 130559,
+      "feeWei": 13055900000000,
+      "valueWei": 0,
+      "block": 144781300,
+      "url": "https://testnet.bscscan.com/tx/0x27d995576b220123270d9acdfd1eb093c21e25a2648aa669809cb36d25e2178f"
+    },
+    {
+      "label": "bob register (invest)",
+      "from": "bob",
+      "hash": "0x67c16076fb2ea22483f1575a35073ad2235cc687f6dc7a5f9a4af014c3eff184",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 130571,
+      "feeWei": 13057100000000,
+      "valueWei": 0,
+      "block": 144781314,
+      "url": "https://testnet.bscscan.com/tx/0x67c16076fb2ea22483f1575a35073ad2235cc687f6dc7a5f9a4af014c3eff184"
+    },
+    {
+      "label": "erin register (invest)",
+      "from": "erin",
+      "hash": "0x5a2ffc811ec17ec5e454218d2a86b46c0689e1650d61abce20cd39da2eac37ca",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 130547,
+      "feeWei": 13054700000000,
+      "valueWei": 0,
+      "block": 144781326,
+      "url": "https://testnet.bscscan.com/tx/0x5a2ffc811ec17ec5e454218d2a86b46c0689e1650d61abce20cd39da2eac37ca"
+    },
+    {
+      "label": "alice Portal.newLauncher",
+      "from": "alice",
+      "hash": "0xd5c9a0dcdb37b989f2b514f09f324879f8b80d79bbb85e45cfe7f1e370908fda",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 612331,
+      "feeWei": 61233100000000,
+      "valueWei": 5000000000000000,
+      "block": 144781345,
+      "url": "https://testnet.bscscan.com/tx/0xd5c9a0dcdb37b989f2b514f09f324879f8b80d79bbb85e45cfe7f1e370908fda"
+    },
+    {
+      "label": "outsider contribute 0.001",
+      "from": "outsider",
+      "hash": "0xaa61aeaafa051fb24eb81169785df8eac19803e7ceb440b34030cce596939c41",
+      "status": "reverted",
+      "expected": "revert NotVerified()",
+      "gasUsed": 68738,
+      "feeWei": 6873800000000,
+      "valueWei": 1000000000000000,
+      "block": 144781363,
+      "url": "https://testnet.bscscan.com/tx/0xaa61aeaafa051fb24eb81169785df8eac19803e7ceb440b34030cce596939c41"
+    },
+    {
+      "label": "bob contribute 0.100000",
+      "from": "bob",
+      "hash": "0x98a9dbd03806a6b0580f2c9a0b9b7209915422f1024c81d13d90bf47b6dd41ed",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 229050,
+      "feeWei": 22905000000000,
+      "valueWei": 100000000000000000,
+      "block": 144781375,
+      "url": "https://testnet.bscscan.com/tx/0x98a9dbd03806a6b0580f2c9a0b9b7209915422f1024c81d13d90bf47b6dd41ed"
+    },
+    {
+      "label": "erin contribute 0.020000",
+      "from": "erin",
+      "hash": "0x1704bf432c958c8d09fbc82fb8d981df4eb2fa414bf2b84dae1e8500bd53a6b9",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 174950,
+      "feeWei": 17495000000000,
+      "valueWei": 20000000000000000,
+      "block": 144781383,
+      "url": "https://testnet.bscscan.com/tx/0x1704bf432c958c8d09fbc82fb8d981df4eb2fa414bf2b84dae1e8500bd53a6b9"
+    },
+    {
+      "label": "admin revokeWallet(bob)",
+      "from": "deployer",
+      "hash": "0xa1b6822bd1a01801bfa215f7b329105d48408e4e62b459fe17a5c5bbd4c3f9a5",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 54413,
+      "feeWei": 5441300000000,
+      "valueWei": 0,
+      "block": 144781400,
+      "url": "https://testnet.bscscan.com/tx/0xa1b6822bd1a01801bfa215f7b329105d48408e4e62b459fe17a5c5bbd4c3f9a5"
+    },
+    {
+      "label": "bob withdrawContribution",
+      "from": "bob",
+      "hash": "0x32eca640212bf74caed05fabda6af4919f9dfae1deac765e346e57839ce02332",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 64654,
+      "feeWei": 6465400000000,
+      "valueWei": 0,
+      "block": 144781413,
+      "url": "https://testnet.bscscan.com/tx/0x32eca640212bf74caed05fabda6af4919f9dfae1deac765e346e57839ce02332"
+    }
+  ],
+  "startBalances": {
+    "deployer": "499300887400000000",
+    "verifier": "0",
+    "alice": "0",
+    "bob": "0",
+    "erin": "0",
+    "outsider": "0"
+  },
+  "launcher": "0x721765B1022145ebE90ba7B06FBB06C942965d92",
+  "salt": "0x7f2db57a44f7485c50ac6c64ab237616168f1a9159e06086c05a0ccc54c2f436",
+  "predictedToken": "0xD6f4808bfD2FCaCa1F71eA8EdA49ca7Ce4137777",
+  "contributed": {
+    "bob": true,
+    "erin": true
+  },
+  "bobWithdrawDeltaWei": "99993534600000000",
+  "holderAttack": {
+    "ok": false,
+    "failedCheck": "holder",
+    "detail": "holder-AID signature mismatch: presenter does not control the credential's AID"
+  }
+}

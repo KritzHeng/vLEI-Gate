@@ -1,0 +1,25 @@
+{
+  "question": "Will the US government shut down before 2027?",
+  "http": 200,
+  "body": {
+    "code": 0,
+    "msg": "Success",
+    "data": {
+      "markets": [
+        {
+          "market_info": {
+            "id": 2343719,
+            "title": "Government shutdown by December 31?",
+            "description": "This market will resolve to \"Yes\" if the United States federal government enters a shutdown due to a lapse in appropriations by the specified date, 11:59 PM ET. Otherwise, this market will resolve to \"No\".\n\nA U.S. federal government shutdown is considered to have gone into effect when there is a lapse in appropriations that results in federal government agencies suspending non-excepted operations, typically including the furlough of non-excepted federal employees.\n\nA lapse in appropriations occu\u2026",
+            "start_time": "",
+            "end_time": "2028-01-01T15:00:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.3613
+          },
+          "matching_confidence": 0.79
+        }
+      ],
+      "charged": false
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "txs": [
+    {
+      "label": "deployer funds alice",
+      "from": "deployer",
+      "hash": "0x2e1cd1368c02a948419d56c3db2e83156ebdaae2a642ab9b360e30d08e0c6a90",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 21000,
+      "feeWei": 2100000000000,
+      "valueWei": 21276349100000000,
+      "block": 144922795,
+      "url": "https://testnet.bscscan.com/tx/0x2e1cd1368c02a948419d56c3db2e83156ebdaae2a642ab9b360e30d08e0c6a90"
+    },
+    {
+      "label": "alice newLauncher 1 BNB target (Atlas-priced)",
+      "from": "alice",
+      "hash": "0xfa6fcbafc0f52032bf97841ac0852f4b6e10937f8f6d81bc47b5cb955d351a5c",
+      "status": "reverted",
+      "expected": "revert TargetBelowMinimum",
+      "gasUsed": 76829,
+      "feeWei": 7682900000000,
+      "valueWei": 5000000000000000,
+      "block": 144922807,
+      "url": "https://testnet.bscscan.com/tx/0xfa6fcbafc0f52032bf97841ac0852f4b6e10937f8f6d81bc47b5cb955d351a5c"
+    },
+    {
+      "label": "alice newLauncher 3.2 BNB target (Atlas-priced)",
+      "from": "alice",
+      "hash": "0x567695e6da548b3204a7954ab8f3a091a5e1091371b77f1483883a96a1e2344e",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 616672,
+      "feeWei": 61667200000000,
+      "valueWei": 5000000000000000,
+      "block": 144922819,
+      "url": "https://testnet.bscscan.com/tx/0x567695e6da548b3204a7954ab8f3a091a5e1091371b77f1483883a96a1e2344e"
+    },
+    {
+      "label": "alice contribute 0.01 BNB",
+      "from": "alice",
+      "hash": "0x9a47c34c51a057f3c98fc279d77fb52414634ced8db123adcab074688d8d7a8d",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 223852,
+      "feeWei": 22385200000000,
+      "valueWei": 10000000000000000,
+      "block": 144922830,
+      "url": "https://testnet.bscscan.com/tx/0x9a47c34c51a057f3c98fc279d77fb52414634ced8db123adcab074688d8d7a8d"
+    },
+    {
+      "label": "alice contribute 0.01 BNB over cap",
+      "from": "alice",
+      "hash": "0x0ac3a49672169b30185a5bcaaaf04a9050da65741b129e91ea81934aeb19a980",
+      "status": "reverted",
+      "expected": "revert CapExceeded",
+      "gasUsed": 99311,
+      "feeWei": 9931100000000,
+      "valueWei": 10000000000000000,
+      "block": 144922838,
+      "url": "https://testnet.bscscan.com/tx/0x0ac3a49672169b30185a5bcaaaf04a9050da65741b129e91ea81934aeb19a980"
+    }
+  ],
+  "done": {
+    "low_target": "0xfa6fcbafc0f52032bf97841ac0852f4b6e10937f8f6d81bc47b5cb955d351a5c",
+    "contrib1": "0x9a47c34c51a057f3c98fc279d77fb52414634ced8db123adcab074688d8d7a8d",
+    "contrib2": "0x0ac3a49672169b30185a5bcaaaf04a9050da65741b129e91ea81934aeb19a980"
+  },
+  "salt": "0x1f7ab3cad98d6fb57000441d221bfb9b373b29a000d8b3852137b84313692688",
+  "token": "0x1FbBDc7199FD2dC093cD9815E91B1d00c8AD7777",
+  "launcher": "0x206dB9B3b73Ca3f57a0cB1C8C3fc83cFDfcD609b"
+}

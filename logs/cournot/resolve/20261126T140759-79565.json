@@ -1,0 +1,73 @@
+{
+  "question": "Will the SEC approve new tokenized securities rules in 2026?",
+  "http": 200,
+  "body": {
+    "code": 0,
+    "msg": "Success",
+    "data": {
+      "markets": [
+        {
+          "market_info": {
+            "id": 21250759,
+            "title": "Will none of the listed platforms list tokenized stocks in the US by December 31, 2027?",
+            "description": "This market will resolve to the first of the listed platforms to make tokenized stocks available for purchase in the United States after September 17, 2026. If none of the listed platforms do so by December 31, 2027, 11:59 PM ET, this market will resolve to \"No listing by December 31, 2027\".\n\nA tokenized stock means a blockchain-based token that represents one share, or a fraction of a share, of a stock or ETF listed on a U.S. national securities exchange (such as Nasdaq or the NYSE) and is eith\u2026",
+            "start_time": "",
+            "end_time": "2028-01-01T04:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.2655
+          },
+          "matching_confidence": 0.61
+        },
+        {
+          "market_info": {
+            "id": 26359389,
+            "title": "Will CME Group launch a token before Jan 1, 2027?",
+            "description": "If CME Group launches a token after Issuance and before Jan 1, 2027, then the market resolves to Yes. A token launch requires ALL of the following: a fungible token deployed on a blockchain network, officially announced by the project as their token, transferability between wallet addresses, real economic value (not testnet), a liquidity pool with real value, and distribution through public sale, private sale, airdrop, liquidity provision, or exchange listing. This includes ICOs, TGEs, airdrops,\u2026",
+            "start_time": "",
+            "end_time": "2026-12-31T18:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.09
+          },
+          "matching_confidence": 0.585
+        },
+        {
+          "market_info": {
+            "id": 2137606,
+            "title": "Will Exponent launch a token before Jan 1, 2027?",
+            "description": "If Exponent launches a token after Issuance and before Jan 1, 2027, then the market resolves to Yes. A token launch requires ALL of the following: a fungible token deployed on a blockchain network, officially announced by the project as their token, transferability between wallet addresses, real economic value (not testnet), a liquidity pool with real value, and distribution through public sale, private sale, airdrop, liquidity provision, or exchange listing. This includes ICOs, TGEs, airdrops, \u2026",
+            "start_time": "",
+            "end_time": "2026-12-31T18:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.06
+          },
+          "matching_confidence": 0.584
+        },
+        {
+          "market_info": {
+            "id": 28963953,
+            "title": "Will the NYSE develop its own chain?",
+            "description": "NYSE has announced plans to launch a tokenized securities platform. More details can be found here: https://x.com/NYSE/status/2013263835549819097\n\nThis market will resolve to the blockchain that the New York Stock Exchange (NYSE) officially confirms it will use for the settlement of its tokenized securities platform.\n\nAn official announcement, regulatory filing, or public statement from NYSE or ICE explicitly naming a blockchain will qualify for resolution and will trigger immediate resolution, \u2026",
+            "start_time": "",
+            "end_time": "2027-01-01T05:00:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.51
+          },
+          "matching_confidence": 0.576
+        },
+        {
+          "market_info": {
+            "id": 23909718,
+            "title": "Will Securities and Exchange Commission (SEC) announce the publication of a final rule, with an effective date, making quarterly reporting optional for public companies before Jan 1, 2027?",
+            "description": "If the Securities and Exchange Commission (SEC) announces the publication of a final rule (with any effective date) making quarterly reporting optional for public companies after Issuance and before Jan 1, 2027 (ET), then the market resolves to Yes. ",
+            "start_time": "",
+            "end_time": "2027-01-01T04:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.09
+          },
+          "matching_confidence": 0.571
+        }
+      ],
+      "charged": false
+    }
+  }
+}

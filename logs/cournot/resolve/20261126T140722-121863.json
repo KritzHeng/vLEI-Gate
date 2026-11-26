@@ -1,0 +1,73 @@
+{
+  "question": "Will the Federal Reserve cut interest rates at the next FOMC meeting?",
+  "http": 200,
+  "body": {
+    "code": 0,
+    "msg": "Success",
+    "data": {
+      "markets": [
+        {
+          "market_info": {
+            "id": 27370089,
+            "title": "Will the Federal Reserve cut rates before 2027? (Yes: Cuts)",
+            "description": "If the Federal Reserve cuts its target federal funds rate range at least once between February 26, 2026 and December 31, 2026, then the market resolves to Yes. The market will close and determine on the first 10 AM ET following the occurrence of the event if the event occurs prior to the target date.",
+            "start_time": "",
+            "end_time": "2027-01-01T04:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.0153
+          },
+          "matching_confidence": 0.727
+        },
+        {
+          "market_info": {
+            "id": 25588499,
+            "title": "Will the Federal Reserve cut rates by June 30, 2027? (Yes: Before July 2027)",
+            "description": "If the Federal Open Market Committee announces a reduction in the target range for the federal funds rate at least once after market Issuance and on or before June 30, 2027, then the market resolves to Yes. The announcement must occur after market issuance and by 11:59 PM ET on the specified date. The announcement date controls, regardless of when the reduction takes effect. Announcements outside regularly scheduled FOMC meetings count.\n\nEach deadline is evaluated separately. A qualifying announ\u2026",
+            "start_time": "",
+            "end_time": "2027-07-01T03:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.37
+          },
+          "matching_confidence": 0.724
+        },
+        {
+          "market_info": {
+            "id": 22244545,
+            "title": "Will the Federal Reserve cut rates by December 31, 2027? (Yes: Before 2028)",
+            "description": "If the Federal Open Market Committee announces a reduction in the target range for the federal funds rate at least once after market Issuance and on or before December 31, 2027, then the market resolves to Yes. The announcement must occur after market issuance and by 11:59 PM ET on the specified date. The announcement date controls, regardless of when the reduction takes effect. Announcements outside regularly scheduled FOMC meetings count.\n\nEach deadline is evaluated separately. A qualifying an\u2026",
+            "start_time": "",
+            "end_time": "2028-01-01T04:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.78
+          },
+          "matching_confidence": 0.722
+        },
+        {
+          "market_info": {
+            "id": 27700384,
+            "title": "Will the Fed decrease interest rates by 25 bps after the January 2027 meeting?",
+            "description": "The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal funds range are made by the Federal Open Market Committee (FOMC) meetings.\n\nThis market will resolve to the amount of basis points the upper bound of the target federal funds rate is changed by versus the level it was prior to the Federal Reserve's January 2027 meeting.\n\nIf the target federal funds rate is changed to a level not expressed in the displayed op\u2026",
+            "start_time": "",
+            "end_time": "2027-01-28T04:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.0143
+          },
+          "matching_confidence": 0.734
+        },
+        {
+          "market_info": {
+            "id": 2205599,
+            "title": "Will the Federal Reserve Cut rates by 25bps at their April 2027 meeting?",
+            "description": "If the Federal Reserve does a Cut of 25bps on April 28, 2027, then the market resolves to Yes. The outcomes are mutually exclusive: at most one can resolve to Yes. For example, a 50-basis-point hike resolves \u201cHike   25 bps\u201d to Yes and \u201cHike 25 bps\u201d to No.\n\nIf the scheduled FOMC meeting is canceled and does not occur on its scheduled date, \u201cFed maintains rate\u201d resolves to Yes and all other outcomes resolve to No.",
+            "start_time": "",
+            "end_time": "2027-04-28T23:59:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.1737
+          },
+          "matching_confidence": 0.731
+        }
+      ],
+      "charged": false
+    }
+  }
+}

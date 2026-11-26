@@ -1,0 +1,40 @@
+{
+  "txs": [
+    {
+      "label": "whitelist v1 BNB 0x279141bABEEEFF178E7ADad7db131Eb48763Eb3b",
+      "from": "deployer",
+      "hash": "0xa41bf4b7679242c3b0094cf08e545e7fbf1e41d6ad1f0cdaddf8c59e6d046652",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 72648,
+      "feeWei": 7264800000000,
+      "valueWei": 0,
+      "block": 144935117,
+      "url": "https://testnet.bscscan.com/tx/0xa41bf4b7679242c3b0094cf08e545e7fbf1e41d6ad1f0cdaddf8c59e6d046652"
+    },
+    {
+      "label": "whitelist v2 USDT vault 0xEA3d889e5EA5f684268cDEcc45CE77322F0D9CeD",
+      "from": "deployer",
+      "hash": "0x77dec1f770f36bba07139dd86bcea3ce8e37b77495d9f63ab35431dd18886212",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 72794,
+      "feeWei": 7279400000000,
+      "valueWei": 0,
+      "block": 144935127,
+      "url": "https://testnet.bscscan.com/tx/0x77dec1f770f36bba07139dd86bcea3ce8e37b77495d9f63ab35431dd18886212"
+    },
+    {
+      "label": "whitelist v2 BNB Atlas 0x394928211B03Eb74a6f7061a56973F77A7fC48a4",
+      "from": "deployer",
+      "hash": "0x7a64226beb9ee245dd4a068f8b01ac134f5814419575a30cbfb9bea4ce9650b9",
+      "status": "success",
+      "expected": "success",
+      "gasUsed": 72738,
+      "feeWei": 7273800000000,
+      "valueWei": 0,
+      "block": 144935138,
+      "url": "https://testnet.bscscan.com/tx/0x7a64226beb9ee245dd4a068f8b01ac134f5814419575a30cbfb9bea4ce9650b9"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "question": "Will US Treasury 10-year yield be above 4.5% by end of 2026?",
+  "http": 200,
+  "body": {
+    "code": 0,
+    "msg": "Success",
+    "data": {
+      "markets": [
+        {
+          "market_info": {
+            "id": 2878523,
+            "title": "Will the yield of 10-year U.S. treasury notes be above 4.74 on Dec 31, 2026?",
+            "description": "If the 10Y US Treasury Yield is above 4.74% on Dec 31, 2026, then the market resolves to Yes. The market will expire at the sooner of the first 7:00 PM ET following the data release for Dec 31, 2026, or one week following Dec 31, 2026.",
+            "start_time": "",
+            "end_time": "2026-12-31T19:00:00Z",
+            "market_outcome": "YES",
+            "market_outcome_price": 0.74
+          },
+          "matching_confidence": 0.845
+        }
+      ],
+      "charged": false
+    }
+  }
+}
