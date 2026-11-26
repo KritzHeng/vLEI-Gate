@@ -2,6 +2,7 @@
 
   backend/.venv/bin/python scripts/preflight.py           check, and push a fresh Atlas price if it is getting old
   backend/.venv/bin/python scripts/preflight.py --no-push check only (sends no transaction)
+  backend/.venv/bin/python scripts/preflight.py --live    check the hosted demo (Fly.io) instead of localhost
 
 Checks: backend + frontend up, Atlas price age (pushes via push_atlas_price.py when older than --push-after),
 keeper running, Atlas vs CMC agreement, vLEI registration time left for the demo wallets, remaining entity cap on
@@ -29,6 +30,9 @@ FRONT_ENV = {k: v for k, v in dotenv_values(ROOT / "frontend/.env.local").items(
 RPC = ENV.get("RPC_URL") or "https://bsc-testnet-rpc.publicnode.com"
 BACKEND = FRONT_ENV.get("NEXT_PUBLIC_BACKEND_URL", "http://localhost:8000").rstrip("/")
 FRONTEND = "http://localhost:3000"
+# Hosted demo (--live); override with LIVE_BACKEND_URL / LIVE_FRONTEND_URL in .env
+LIVE_BACKEND = ENV.get("LIVE_BACKEND_URL", "https://vlei-gate-api.fly.dev").rstrip("/")
+LIVE_FRONTEND = ENV.get("LIVE_FRONTEND_URL", "https://vlei-gate-kyb.fly.dev").rstrip("/")
 ATLAS_FEED = json.loads((ROOT / "contracts/deployments/97-atlas.json").read_text())["atlasSignedFeed"]
 REGISTRY = json.loads((ROOT / "contracts/deployments/97.json").read_text())["registry"]
 BNB_LAUNCH = "0x206dB9B3b73Ca3f57a0cB1C8C3fc83cFDfcD609b"  # Atlas-priced BNB launch used in the demo (scene 5)
@@ -100,19 +104,35 @@ def main() -> None:
     ap.add_argument("--no-push", action="store_true", help="never send the Atlas price transaction")
     ap.add_argument("--push-after", type=int, default=1800, help="push a fresh Atlas price when older than this (s)")
     ap.add_argument("--min-left", type=int, default=7200, help="warn when a wallet's vLEI expires within this (s)")
+    ap.add_argument("--live", action="store_true", help="check the hosted demo (Fly.io) instead of localhost")
     a = ap.parse_args()
 
-    print("1. Services")
+    global BACKEND, FRONTEND
+    if a.live:
+        BACKEND, FRONTEND = LIVE_BACKEND, LIVE_FRONTEND
+    fix_backend = ("fly status -a vlei-gate-api (if stopped: fly apps restart vlei-gate-api)" if a.live
+                   else "cd backend && .venv/bin/uvicorn app.main:app --port 8000")
+    fix_frontend = ("fly status -a vlei-gate-kyb (if stopped: fly apps restart vlei-gate-kyb)" if a.live
+                    else "cd frontend && npm run dev")
+
+    print(f"1. Services ({'hosted demo' if a.live else 'localhost'})")
+    health: dict = {}
     try:
-        h = httpx.get(f"{BACKEND}/api/health", timeout=10).json()
-        ok(f"backend {BACKEND} (chain {h.get('chainId')}, demo agent {h.get('demoAgent')}, Cournot {h.get('cournotMode')})")
+        health = httpx.get(f"{BACKEND}/api/health", timeout=30).json()
+        ok(f"backend {BACKEND} (chain {health.get('chainId')}, demo agent {health.get('demoAgent')}, "
+           f"Cournot {health.get('cournotMode')})")
+        if not health.get("demoAgent"):
+            fail("demo agent disabled on the backend: the KYB scene cannot sign the holder challenge (ENABLE_DEMO_AGENT=true)")
     except Exception as e:  # noqa: BLE001
-        fail(f"backend {BACKEND} not reachable ({type(e).__name__}): cd backend && .venv/bin/uvicorn app.main:app --port 8000")
-    try:
-        code = httpx.get(FRONTEND, timeout=60).status_code
-        (ok if code == 200 else fail)(f"frontend {FRONTEND} -> HTTP {code}" + ("" if code == 200 else ": restart npm run dev"))
-    except Exception as e:  # noqa: BLE001
-        fail(f"frontend {FRONTEND} not reachable ({type(e).__name__}): cd frontend && npm run dev")
+        fail(f"backend {BACKEND} not reachable ({type(e).__name__}): {fix_backend}")
+    pages = ["", "/verify", f"/offerings/{BNB_LAUNCH}", "/portfolio"] if a.live else [""]
+    for page in pages:
+        try:
+            code = httpx.get(f"{FRONTEND}{page}", timeout=60).status_code
+            (ok if code == 200 else fail)(f"frontend {FRONTEND}{page or '/'} -> HTTP {code}"
+                                          + ("" if code == 200 else f": {fix_frontend}"))
+        except Exception as e:  # noqa: BLE001
+            fail(f"frontend {FRONTEND}{page or '/'} not reachable ({type(e).__name__}): {fix_frontend}")
 
     print("2. Atlas BNB/USD price")
     try:
@@ -216,7 +236,20 @@ def main() -> None:
 
     print("6. Cournot")
     live = sorted((ROOT / "logs/cournot/live").glob("*-probability.json"))
-    if not live:
+    if a.live:  # the hosted backend serves the logs baked into its image, not this machine's
+        try:
+            r = httpx.get(f"{BACKEND}/api/oracle/cournot-latest", timeout=15)
+            if r.status_code == 200:
+                ok(f"hosted backend serves a live result p = {r.json().get('probability')}")
+            else:
+                fail(f"hosted backend has no live Cournot result (HTTP {r.status_code}): the contribute gate stays closed")
+        except Exception as e:  # noqa: BLE001
+            fail(f"Cournot latest unavailable ({type(e).__name__})")
+        if health.get("cournotRefresh") is False:
+            ok("live Cournot calls disabled on the server (refresh -> 403); no quota can be spent from the stage")
+        else:
+            warn("live Cournot calls enabled on the hosted backend: set COURNOT_ALLOW_REFRESH=false")
+    elif not live:
         fail("no logged live Cournot result: the risk card and the contribute gate have nothing to show")
     else:
         try:
@@ -224,15 +257,16 @@ def main() -> None:
             ok(f"latest logged live result p = {latest.get('probability')} ({live[-1].name[:16]})")
         except Exception:  # noqa: BLE001
             ok(f"{len(live)} logged live result(s), latest {live[-1].name[:16]}")
-    if ENV.get("COURNOT_API_KEY"):
-        ok("COURNOT_API_KEY set (refresh uses the paid pack)")
-    else:
-        left = max(0, COURNOT_FREE_CALLS - len(live))
-        warn(f"no COURNOT_API_KEY: about {left} free call(s) left from this IP. Don't press refresh on stage")
-    if FRONT_ENV.get("NEXT_PUBLIC_COURNOT_REFRESH") == "false":
-        ok("refresh button hidden (NEXT_PUBLIC_COURNOT_REFRESH=false)")
-    else:
-        warn("refresh button visible: set NEXT_PUBLIC_COURNOT_REFRESH=false in frontend/.env.local to hide it")
+    if not a.live:
+        if ENV.get("COURNOT_API_KEY"):
+            ok("COURNOT_API_KEY set (refresh uses the paid pack)")
+        else:
+            left = max(0, COURNOT_FREE_CALLS - len(live))
+            warn(f"no COURNOT_API_KEY: about {left} free call(s) left from this IP. Don't press refresh on stage")
+        if FRONT_ENV.get("NEXT_PUBLIC_COURNOT_REFRESH") == "false":
+            ok("refresh button hidden (NEXT_PUBLIC_COURNOT_REFRESH=false)")
+        else:
+            warn("refresh button visible: set NEXT_PUBLIC_COURNOT_REFRESH=false in frontend/.env.local to hide it")
 
     print()
     print(f"{R}{fails} check(s) failed{X}" if fails else f"{G}Ready to record.{X}")
