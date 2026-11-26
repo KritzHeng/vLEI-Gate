@@ -19,9 +19,7 @@ vLEI-Gate lets only cryptographically verified legal entities, acting through au
 
 | | |
 | --- | --- |
-| 🎥 Demo video | `<link>` |
 | 🌐 Live app | https://vlei-gate-kyb.fly.dev (KYB Portal, BSC Testnet) · API https://vlei-gate-api.fly.dev/api/health |
-| 🏁 HackQuest | `<link>` |
 | ⛓️ Network | BNB Smart Chain Testnet (Chapel, chainId 97) |
 | ✅ Full testnet run | 37 txs: launch, graduation, claim, USDT yield, revocation ([`docs/testnet-run.md`](docs/testnet-run.md)) |
 
