@@ -1,0 +1,42 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# node / Next.js
+node_modules/
+.next/
+frontend/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+# local anvil deployments (scripts/e2e_local.py); keep 97.json (BSC Testnet) committed
+contracts/deployments/31337.json
+
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated vLEI test chain (backend/scripts/make_test_chain.py).
+# keystore/ holds the demo KERI private keys of every test party and must never be committed.
+# The rest (wallets/, watcher/, root.json) is generated together with the keystore and only
+# works with it: the demo agent signs with the keystore and the KELs are exported from it.
+# Committing them without the keystore would leave a clone with credentials nobody can
+# present, and regenerating rewrites them with new AIDs anyway. So the whole dir is ignored;
+# run `python scripts/make_test_chain.py` after cloning.
+backend/data/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Flap template clones (recreated by flap-launcher-ui/check.sh)
+flap-launcher-ui/template/
+flap-launcher-ui/template-main/
