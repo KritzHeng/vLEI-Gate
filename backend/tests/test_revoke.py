@@ -47,6 +47,7 @@ def _verify(data_dir: Path, persona: str):
     s = Settings()
     s.watcher_dir = data_dir / "watcher"
     s.registry_address = REGISTRY
+    s.rpc_url = ""  # offline: use the client-supplied nonce, never the real RPC from .env
     s.verifier_private_key = "0x" + "22" * 32
     store = ChallengeStore(300)
     v = Verifier(s, store)

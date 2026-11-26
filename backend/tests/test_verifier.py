@@ -24,6 +24,7 @@ VERIFIER_KEY = "0x" + "11" * 32
 def v():
     s = Settings()
     s.registry_address = REGISTRY
+    s.rpc_url = ""  # offline: use the client-supplied nonce, never the real RPC from .env
     s.verifier_private_key = VERIFIER_KEY
     store = ChallengeStore(300)
     return Verifier(s, store), store
@@ -156,3 +157,12 @@ def test_malformed_presentation_is_structure_failure(v):
     res = verifier.verify({"challengeId": ch.id, "leafSaid": bob["leafSaid"], "credentials": bad,
                            "holderSignature": "", "walletSignature": ""})
     assert not res.ok and failed(res) == "structure"
+
+
+def test_rpc_down_fails_attestation_check_not_500(v):
+    """An unreachable RPC while reading nonces(wallet) is a clean attestation failure, not an exception."""
+    v[0].s.rpc_url = "http://127.0.0.1:9"  # nothing listens here
+    res, _ = run(v, "alice", action="launch")
+    assert not res.ok
+    assert failed(res) == "attestation"
+    assert "registry nonce" in res.error and "127.0.0.1" not in res.error

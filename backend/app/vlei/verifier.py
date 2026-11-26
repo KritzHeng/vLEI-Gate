@@ -291,6 +291,10 @@ class Verifier:
         if not self.s.verifier_private_key or not self.s.registry_address:
             return fail("attestation", "verifier key or registry address not configured")
         expires_at = int(time.time()) + self.s.attestation_ttl
+        try:
+            nonce = self._registry_nonce(challenge, req)
+        except Exception as e:  # noqa: BLE001 - RPC down/slow/misconfigured must not 500 the request
+            return fail("attestation", f"could not read the registry nonce on-chain ({e}); request a new challenge and retry")
         result.attestation = sign_attestation(
             private_key=self.s.verifier_private_key,
             chain_id=challenge.chain_id,
@@ -298,7 +302,7 @@ class Verifier:
             wallet=challenge.wallet,
             lei=info["lei"],
             role=role,
-            nonce=self._registry_nonce(challenge, req),
+            nonce=nonce,
             expires_at=expires_at,
         )
         result.attestation["nonceSource"] = "chain" if self.s.rpc_url else "client"
@@ -312,13 +316,20 @@ def _read_registry_nonce(rpc_url: str, registry: str, wallet: str) -> int:
     from eth_utils import keccak
 
     data = "0x" + keccak(text="nonces(address)")[:4].hex() + wallet.lower().removeprefix("0x").rjust(64, "0")
-    r = httpx.post(rpc_url, json={"jsonrpc": "2.0", "id": 1, "method": "eth_call",
-                                  "params": [{"to": registry, "data": data}, "latest"]}, timeout=10)
-    r.raise_for_status()
+    try:
+        r = httpx.post(rpc_url, json={"jsonrpc": "2.0", "id": 1, "method": "eth_call",
+                                      "params": [{"to": registry, "data": data}, "latest"]}, timeout=10)
+    except httpx.HTTPError as e:
+        raise VerificationError(f"RPC unreachable ({type(e).__name__})") from None  # no URL: it may embed a key
+    if r.status_code != 200:
+        raise VerificationError(f"RPC returned HTTP {r.status_code}")
     body = r.json()
     if "error" in body:
-        raise VerificationError(f"RPC error reading nonce: {body['error']}")
-    return int(body["result"], 16)
+        raise VerificationError(f"RPC error: {body['error'].get('message', body['error'])}")
+    result = body.get("result") or "0x"
+    if result == "0x":
+        raise VerificationError("registry returned no data (wrong address or not deployed on this chain)")
+    return int(result, 16)
 
 
 def _verify_any(verfers, cigar_qb64: str, ser: bytes) -> bool:
