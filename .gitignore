@@ -40,3 +40,11 @@ backend/data/
 # Flap template clones (recreated by flap-launcher-ui/check.sh)
 flap-launcher-ui/template/
 flap-launcher-ui/template-main/
+
+# Internal team notes (Thai / working docs) and copies of sponsor-provided docs: kept locally, not published
+docs/flow.md
+docs/demo-script.md
+docs/demo-design.md
+docs/project-overview-th.md
+docs/track-coverage.md
+docs/reference/

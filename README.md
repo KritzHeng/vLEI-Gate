@@ -1,10 +1,11 @@
 <!--
 BEFORE SUBMITTING — fill every placeholder, then delete this comment:
-  [ ] Demo video link, live app link, HackQuest project link
+  [x] Live app link (Fly.io)
+  [ ] Demo video link, HackQuest project link
   [x] Atlas BNB/USD: signed Pull API reports (feedId 633) relayed to `AtlasSignedFeed` on BSC Testnet (Section 4.3)
   [x] Cournot live calls logged (Section 4.4); [ ] screenshot `docs/img/cournot-panel.png`
   [x] Flap enablement: all three launcher factories enabled at 1x on 2026-11-26 via Flap's testnet whitelister (Section 4.2); vault factory still requested
-  [x] Flap UI ZIPs: launcher (v1 BNB 0x2791…), vault launcher (v2 USDT 0xEA3d…) and vault (0x3C90…, token 0xa272…) packaged in flap-launcher-ui/dist/
+  [x] Flap UI ZIPs: launcher (v2 BNB, Atlas-priced 0x3949…), vault launcher (v2 USDT 0xEA3d…) and vault (0x3C90…, token 0xa272…) packaged in flap-launcher-ui/dist/
   [ ] Team (bottom of this file)
   [ ] git grep for API keys / private keys before making the repo public
 -->
@@ -20,7 +21,7 @@ vLEI-Gate lets only cryptographically verified legal entities, acting through au
 | | |
 | --- | --- |
 | 🎥 Demo video | `<link>` |
-| 🌐 Live app | `<link>` |
+| 🌐 Live app | https://vlei-gate-kyb.fly.dev (KYB Portal, BSC Testnet) · API https://vlei-gate-api.fly.dev/api/health |
 | 🏁 HackQuest | `<link>` |
 | ⛓️ Network | BNB Smart Chain Testnet (Chapel, chainId 97) |
 | ✅ Full testnet run | 37 txs: launch, graduation, claim, USDT yield, revocation ([`docs/testnet-run.md`](docs/testnet-run.md)) |
@@ -90,7 +91,7 @@ On the USDT path the user first **approves the launcher on the USDT token in the
 - **Launcher:** keeps the economics of Flap's `MintLauncher` (1M supply, 50% pool / 50% claimed pro rata, 3% buy / 5% sell tax) and adds the vLEI checks on `contribute` and `claim`, plus `withdrawContribution`, `cancelIfCreatorRevoked` and `refund`. All UI actions are zero-arg; `contributeAmount(uint256)` exists for scripts.
 - **Portal:** `0x000042108465206185A077Edc3F3fd2b49060000` (BSC Testnet, v1.2.0). `Portal.newLauncher{value: SALT_LOCK_FEE}(factory, abi.encode(VLEIMintConfig))`; the salt makes the token address end in `0x7777`. The Portal deploys the token (`launchTaxTokenV2`), seeds the pool and, for the vault variant, creates the vault. Read on chain: creation floor **1,500 USDT**, graduation floor **3,000 USDT** (our demo raised 3,000 and graduated).
 - **No developer commission:** `commissionReceiver = address(0)`, enforced; 100% of vault revenue goes to stakers.
-- **Launcher UI:** `flap-launcher-ui/vlei-gate-launcher/` (`manifest.json` kind `launcher-ui`, `Component.tsx`, `i18n.json`), built from Flap's `flap-vault-component-template`, checked with `yarn launcher:check-source` and packaged in `flap-launcher-ui/dist/`. It shows the viewer's vLEI status, raised / target, remaining entity cap, and contribute / claim / refund / withdraw buttons, with a link to the KYB Portal for unverified wallets. Three ZIPs are packaged: `vlei-gate-launcher.zip` (bound to the v1 BNB factory `0x2791…Eb3b`), `vlei-gate-vault-launcher.zip` (v2 USDT vault launcher factory `0xEA3d…9CeD`) and `vlei-gate-vault.zip` (stake / claim / evict; vault factory `0x3C90…9c03`, token `0xa272…7777`).
+- **Launcher UI:** `flap-launcher-ui/vlei-gate-launcher/` (`manifest.json` kind `launcher-ui`, `Component.tsx`, `i18n.json`), built from Flap's `flap-vault-component-template`, checked with `yarn launcher:check-source` and packaged in `flap-launcher-ui/dist/`. It shows the viewer's vLEI status, raised / target, remaining entity cap, and contribute / claim / refund / withdraw buttons, with a link to the KYB Portal for unverified wallets. Three ZIPs are packaged: `vlei-gate-launcher.zip` (bound to the v2 BNB factory `0x3949…48a4`, Atlas-priced; the v1 factory `0x2791…Eb3b` uses a mock feed and is legacy), `vlei-gate-vault-launcher.zip` (v2 USDT vault launcher factory `0xEA3d…9CeD`) and `vlei-gate-vault.zip` (stake / claim / evict; vault factory `0x3C90…9c03`, token `0xa272…7777`).
 - **Factory enablement:** the testnet Portal v1.2.0 does **not** require it: our full USDT run used unopened factories. We still ask Flap to open them (`setLauncherFactoryMultiplier` / `setVaultFactoryMultiplier`) for the UI status, the floor multiplier and the low-risk badge; the vault shows as unverified on Flap until audited. On an anvil fork we enable by impersonating the Portal admin (`contracts/script/enable_factory_fork.sh`). Status (2026-11-26): the three launcher factories are **enabled at 1x** on the Portal (`launcherFactoryMultiplier` = `true, 10000`) through Flap's testnet helper `LauncherFactoryWhitelister` `0x77779969a11eff7582f3bCf48135A846A3457777` (`whitelist(factory)`): v1 BNB `0x2791…Eb3b` tx `0xa41bf4b7…6d046652`, v2 USDT vault `0xEA3d…9CeD` tx `0x77dec1f7…18886212`, v2 BNB (Atlas) `0x3949…48a4` tx `0x7a64226b…9650b9`. The vault factory `0x3C90…9c03` (`vaultFactoryMultiplier` = `false`) is not covered by the helper and is requested from Flap.
 
 | Item | Address |
@@ -445,6 +446,33 @@ npm run dev
 
 On an anvil fork (chainId 97) set `NEXT_PUBLIC_RPC_URL=http://127.0.0.1:8545` and the backend's `CHAIN_ID=97`, `RPC_URL=http://127.0.0.1:8545`.
 
+### Hosted deployment (Fly.io, HTTPS)
+
+The public demo runs on Fly.io (region `sin`): KYB Portal https://vlei-gate-kyb.fly.dev and backend https://vlei-gate-api.fly.dev.
+
+```bash
+fly auth login
+fly apps create vlei-gate-api && fly apps create vlei-gate-kyb
+scripts/fly_set_secrets.sh vlei-gate-api           # VERIFIER_PRIVATE_KEY, CMC_API_KEY (+ COURNOT_API_KEY) from .env, never printed
+fly deploy --config fly.api.toml --remote-only      # backend: backend/Dockerfile, build context = repo root (.dockerignore allowlist)
+(cd frontend && fly deploy --remote-only)           # portal: frontend/Dockerfile; NEXT_PUBLIC_BACKEND_URL baked in via frontend/fly.toml
+```
+
+- No secret is in an image or a toml file; non-secret settings are in `fly.api.toml` `[env]` (CORS allows the portal origin).
+- On the public deployment `COURNOT_ALLOW_REFRESH=false`: visitors see the logged live Cournot result, and a refresh request returns 403, so nobody can spend the quota.
+- The demo holder agent is enabled (`ENABLE_DEMO_AGENT=true`) so visitors can try the sample personas. BSC Testnet only; set it to `false` to turn it off.
+- The Atlas relayer still runs from a workstation (`scripts/atlas_keeper.sh`); see `docs/aws-production-plan.md` for the scheduled version.
+- Each app runs one always-on `shared-cpu-1x` / 512 MB machine in `sin` (`auto_stop_machines = "off"`). Fly.io trial accounts stop machines after 5 minutes, and an in-memory KYB challenge is lost on a restart, so the account needs a card on file. Ours has one (verified 2026-11-26: both machines stayed up past 5 minutes).
+
+Operations:
+
+```bash
+fly status -a vlei-gate-api            # same for vlei-gate-kyb
+fly logs -a vlei-gate-api --no-tail
+fly apps restart vlei-gate-api         # or: fly machine start <id> -a <app>
+fly scale count 0 -a vlei-gate-kyb     # stop billing after the event (count 1 to bring it back)
+```
+
 ### Flap launcher UI
 
 ```bash
@@ -471,7 +499,7 @@ cd flap-launcher-ui
 ├── flap-launcher-ui/          # Flap UI components (packaged ZIPs in dist/): vlei-gate-launcher,
 │                              #   vlei-gate-vault-launcher, vlei-gate-vault; template/ = Flap's component template
 ├── scripts/                   # testnet_full_usdt.py, testnet_partial.py, e2e_local.sh / e2e_local.py
-├── docs/                      # flow.md (detailed flows), demo-script.md, aws-production-plan.md, testnet-run.md (tx log), cmc-atlas-writeup.md, img/
+├── docs/                      # testnet-run.md (tx log), cmc-atlas-writeup.md, atlas-payload-format.md, aws-production-plan.md, img/
 └── logs/                      # cournot/ (raw Cournot logs), testnet/ (testnet run state + console logs)
 ```
 

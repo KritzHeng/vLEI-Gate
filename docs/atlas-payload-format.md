@@ -1,8 +1,8 @@
 # Atlas signed payload: format and signature scheme
 
 How `contracts/src/oracle/AtlasSignedFeed.sol` and `scripts/push_atlas_price.py` read a signed report from the Atlas Oracle
-Pull API (`POST https://api.atlasoracle.io/report/v1/price/latest`, body `{"feedIds":["<id>"],"signed":true}`). Source
-docs: [`docs/reference/atlas-pull-api.txt`](reference/atlas-pull-api.txt).
+Pull API (`POST https://api.atlasoracle.io/report/v1/price/latest`, body `{"feedIds":["<id>"],"signed":true}`). Source:
+the Atlas Oracle *Pull API and WebSocket* integration guide provided to hackathon teams.
 
 ## Evidence
 
