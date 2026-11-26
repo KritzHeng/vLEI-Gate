@@ -29,7 +29,7 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 // ═══════════════════════════════════════════════════════════════════════════
 
 /** Off-site link targets are not allowed in Launcher packages, so this URL is shown as text. */
-const KYB_PORTAL_URL = "http://localhost:3000";
+const KYB_PORTAL_URL = "https://vlei-gate-kyb.fly.dev";
 const QUOTE_SYMBOL = "USDT";
 const STATUS = { raising: "0", launched: "1", failed: "2", cancelled: "3" } as const;
 const VLEI = { none: "0", active: "1", expired: "2", walletRevoked: "3", entityRevoked: "4" } as const;

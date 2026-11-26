@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Validate and package the three vLEI-Gate components with the Flap template's own tooling.
 #
-#   vlei-gate-launcher        launcher UI, v1 BNB factory      0x279141bABEEEFF178E7ADad7db131Eb48763Eb3b
+#   vlei-gate-launcher        launcher UI, v2 BNB factory (Atlas price) 0x394928211B03Eb74a6f7061a56973F77A7fC48a4
 #   vlei-gate-vault-launcher  launcher UI, v2 USDT factory     0xEA3d889e5EA5f684268cDEcc45CE77322F0D9CeD
 #   vlei-gate-vault           Vault UI,   v2 USDT vault factory 0x3C90db983d2eE6D3aa8fD88d6CF5Ae8535d49c03
 #

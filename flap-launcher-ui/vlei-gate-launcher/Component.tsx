@@ -19,7 +19,7 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 // ═══════════════════════════════════════════════════════════════════════════
 
 /** Off-site link targets are not allowed in Launcher packages, so this URL is shown as text. */
-const KYB_PORTAL_URL = "http://localhost:3000";
+const KYB_PORTAL_URL = "https://vlei-gate-kyb.fly.dev";
 /** Display hint only, mirrors the launcher's maxPriceAge. TODO: confirm with contracts/. */
 const MAX_PRICE_AGE_SECONDS = 3600n;
 const STATUS = { raising: "0", launched: "1", failed: "2", cancelled: "3" } as const;

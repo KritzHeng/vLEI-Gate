@@ -4,7 +4,7 @@
   "artifactId": "vlei-gate-launcher",
   "name": "vLEI-Gate Verified Entity Raise",
   "chainId": 97,
-  "factoryAddress": "0x279141bABEEEFF178E7ADad7db131Eb48763Eb3b",
+  "factoryAddress": "0x394928211B03Eb74a6f7061a56973F77A7fC48a4",
   "configContract": "launcher-config-preview/v1",
   "surfaces": ["launcher-config", "launcher-ui"],
   "entry": "Component.tsx",
