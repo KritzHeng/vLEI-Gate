@@ -214,6 +214,8 @@ async def assessment(s: Settings, *, refresh: bool, name: str = "", lei: str = "
     cached = latest(s)
     if not refresh and cached is None:
         raise CournotError("no live Cournot assessment yet: request one with refresh=true", 404)
+    if refresh and not s.cournot_allow_refresh:
+        raise CournotError("live Cournot calls are disabled on this deployment (COURNOT_ALLOW_REFRESH=false)", 403)
     if refresh:
         try:
             res = await live_call(s)

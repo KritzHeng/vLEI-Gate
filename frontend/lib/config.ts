@@ -7,6 +7,9 @@ export const RPC_URL =
   process.env.NEXT_PUBLIC_RPC_URL ||
   (CHAIN_ID === 31337 ? "http://127.0.0.1:8545" : "https://data-seed-prebsc-1-s1.bnbchain.org:8545");
 export const BACKEND_URL = (process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000").replace(/\/$/, "");
+/** false hides "Run a new live Cournot call" (each call spends Cournot quota); the page still shows the latest
+ *  logged live result. Set NEXT_PUBLIC_COURNOT_REFRESH=false while recording or presenting. */
+export const COURNOT_REFRESH_ENABLED = process.env.NEXT_PUBLIC_COURNOT_REFRESH !== "false";
 
 const ZERO = "0x0000000000000000000000000000000000000000";
 export const REGISTRY_ADDRESS = (process.env.NEXT_PUBLIC_REGISTRY_ADDRESS || ZERO) as Address;

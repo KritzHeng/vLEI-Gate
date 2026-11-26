@@ -35,6 +35,7 @@ def health() -> dict:
         "pinnedRootAid": settings.pinned_root_aid,
         "verifierSigner": Account.from_key(settings.verifier_private_key).address if settings.verifier_private_key else "",
         "cournotMode": "live (api key)" if settings.cournot_api_key else "live (free quota)",
+        "cournotRefresh": settings.cournot_allow_refresh,
         "cmcConfigured": bool(settings.cmc_api_key),
         "demoAgent": settings.enable_demo_agent,
         "nonceSource": "chain" if settings.rpc_url else "client",
@@ -95,7 +96,7 @@ async def cournot_risk(req: RiskReq) -> dict:
     try:
         return await cournot.assessment(settings, refresh=req.refresh, name=req.name, lei=req.lei)
     except cournot.CournotError as e:  # upstream failure is reported, never mocked
-        raise HTTPException(e.status if e.status in (402, 404, 429) else 502, f"Cournot request failed: {e}")
+        raise HTTPException(e.status if e.status in (402, 403, 404, 429) else 502, f"Cournot request failed: {e}")
 
 
 @app.get("/api/oracle/cournot-latest")

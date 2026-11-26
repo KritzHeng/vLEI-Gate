@@ -62,6 +62,8 @@ class Settings:
     cournot_market_ids: list[str] = field(default_factory=lambda: _csv("COURNOT_MARKET_IDS", "2878523"))
     # Server-side throttle on live (quota-spending) calls.
     cournot_min_refresh_seconds: int = int(os.getenv("COURNOT_MIN_REFRESH_SECONDS", "300"))
+    # false on public deployments: serve only logged live results, never spend quota on a visitor's request.
+    cournot_allow_refresh: bool = os.getenv("COURNOT_ALLOW_REFRESH", "true").lower() == "true"
     cournot_risk_threshold: float = float(os.getenv("COURNOT_RISK_THRESHOLD", "0.5"))
     cors_origins: list[str] = field(default_factory=lambda: _csv("CORS_ORIGINS", "http://localhost:3000"))
     # Demo-only: exposes signing with every persona's KERI keys. Never enable next to a real verifier key.

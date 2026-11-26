@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { factoryAbi, priceFeedAbi } from "@/lib/abis";
 import { ApiError, backend, type CmcQuote, type Evidence, type RiskResult } from "@/lib/backend";
 import { publicClient } from "@/lib/clients";
-import { ADDRESSES_CONFIGURED, PRICE_FEED_FACTORY_ADDRESS } from "@/lib/config";
+import { ADDRESSES_CONFIGURED, COURNOT_REFRESH_ENABLED, PRICE_FEED_FACTORY_ADDRESS } from "@/lib/config";
 import { explainError } from "@/lib/errors";
 import { fmtTime, short } from "@/lib/format";
 import { useSession } from "@/lib/session";
@@ -199,14 +199,16 @@ export default function IntelPanel() {
       {!r && !riskErr && <div className="small muted">{latestErr ? "No live Cournot assessment logged yet." : "Loading…"}</div>}
       {riskErr && <div className="status bad">{riskErr}</div>}
       {r && <RiskCard r={r} />}
-      <div className="row wrap small">
-        <button className="secondary" onClick={query} disabled={busy}>
-          {busy ? "Calling Cournot…" : "Run a new live Cournot call"}
-        </button>
-        <span className="muted">
-          Uses one Cournot call (free quota is 3 per IP); the page otherwise shows the latest logged live result.
-        </span>
-      </div>
+      {COURNOT_REFRESH_ENABLED && (
+        <div className="row wrap small">
+          <button className="secondary" onClick={query} disabled={busy}>
+            {busy ? "Calling Cournot…" : "Run a new live Cournot call"}
+          </button>
+          <span className="muted">
+            Uses one Cournot call (free quota is 3 per IP); the page otherwise shows the latest logged live result.
+          </span>
+        </div>
+      )}
       <div className="small">
         <button
           className="link"
