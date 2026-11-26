@@ -1,0 +1,22 @@
+# vLEI-Gate KYB Portal on Fly.io. Deploy from frontend/:
+#   fly deploy
+app = "vlei-gate-kyb"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+  [build.args]
+    NEXT_PUBLIC_BACKEND_URL = "https://vlei-gate-api.fly.dev"
+    NEXT_PUBLIC_COURNOT_REFRESH = "false"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

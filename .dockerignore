@@ -1,0 +1,11 @@
+# Used by backend/Dockerfile (build context = repo root). Allowlist: only what the backend image needs.
+*
+!backend/requirements.txt
+!backend/app/
+!backend/data/
+!contracts/deployments/
+!logs/cournot/
+**/__pycache__
+**/*.pyc
+**/.env
+**/.env.*

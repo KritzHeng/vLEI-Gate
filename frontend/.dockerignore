@@ -1,0 +1,6 @@
+node_modules
+.next
+*.tsbuildinfo
+Dockerfile
+.dockerignore
+# .env.local holds only public NEXT_PUBLIC_* values (addresses, public RPC) and is needed for the build.

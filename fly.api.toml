@@ -1,0 +1,39 @@
+# vLEI-Gate backend on Fly.io. Deploy from the repo root:
+#   fly deploy --config fly.api.toml
+# Secrets (never in this file): scripts/fly_set_secrets.sh
+app = "vlei-gate-api"
+primary_region = "sin"
+
+[build]
+  dockerfile = "backend/Dockerfile"
+
+[env]
+  CHAIN_ID = "97"
+  RPC_URL = "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
+  CMC_BASE_URL = "https://pro-api.coinmarketcap.com"
+  ATTESTATION_TTL_SECONDS = "86400"
+  CHALLENGE_TTL_SECONDS = "300"
+  COURNOT_RISK_THRESHOLD = "0.5"
+  # Public deployment: serve the logged live Cournot result only; no visitor can spend the quota.
+  COURNOT_ALLOW_REFRESH = "false"
+  # Demo holder agent (signs for the sample test-chain personas). BSC Testnet demo only.
+  ENABLE_DEMO_AGENT = "true"
+  CORS_ORIGINS = "https://vlei-gate-kyb.fly.dev,http://localhost:3000"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    grace_period = "20s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/health"
+    timeout = "5s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
