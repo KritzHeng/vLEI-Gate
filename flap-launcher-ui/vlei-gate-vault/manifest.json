@@ -1,0 +1,14 @@
+{
+  "artifactId": "vaultui_vlei-gate-vault_01M899F37ZCACG3C1NBDQMCHK9",
+  "name": "vLEI-Gate Gated Yield Vault (USDT)",
+  "match": {
+    "bindings": [
+      {
+        "chainId": 97,
+        "factoryAddress": "0x3C90db983d2eE6D3aa8fD88d6CF5Ae8535d49c03",
+        "tokenAddresses": ["0xa27228Eec1d484A32aDD3AfCEb2Ad01cc6b07777"]
+      }
+    ]
+  },
+  "i18n": ["en", "zh", "ko"]
+}
